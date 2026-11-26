@@ -29,7 +29,7 @@
   position: absolute;
   bottom: 50px;
   border-radius: 50%;
-  background-color: var(--backgrond-color);
+  background-color: var(--third-color);
   border: 8px solid var(--background-color);
   z-index: 1;
 }
@@ -97,5 +97,18 @@
 }
 
 .input::placeholder {
-  color: var(--text-color);
+  color: var(--on-second);
+  opacity: 0.7;
+}
+
+/* Активная вкладка мобильного меню: иконка уходит в «каплю»-индикатор */
+.navigation .block .current i {
+  transform: translateY(-34px);
+  color: var(--on-third);
+}
+.navigation .block .current p {
+  opacity: 1;
+}
+.navigation .block .block_1 {
+  height: 100%;
 }

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "../styles/globals.css";
+import Providers from "@/components/common/providers";
+import { themeCss, themeInitScript } from "@/components/common/theme/themes";
 
 const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
@@ -20,8 +22,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ru" suppressHydrationWarning>
       <head>
+        <style dangerouslySetInnerHTML={{ __html: themeCss() }} />
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <link
           rel="stylesheet"
           href="https://cdn-uicons.flaticon.com/2.3.0/uicons-regular-rounded/css/uicons-regular-rounded.css"
@@ -40,7 +44,7 @@ export default function RootLayout({
         ></link>
       </head>
       <body suppressHydrationWarning={true} className={roboto.className}>
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

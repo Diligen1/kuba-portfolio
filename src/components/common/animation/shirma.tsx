@@ -1,16 +1,23 @@
 "use client";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { transitionState } from "../transition/transition";
 export default function Shirma() {
+  const reduce = useReducedMotion();
+  // Пришли со шторкой перехода — стартуем уже закрытыми и сразу уезжаем.
+  const [fromTransition] = useState(() => transitionState.covering);
   const [showShirma, setShowShirma] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowShirma(false);
-    }, 1000);
+    const timer = setTimeout(
+      () => {
+        setShowShirma(false);
+      },
+      fromTransition ? 250 : 1000
+    );
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [fromTransition]);
 
   const ShirmaAnimate = {
     initial: {
@@ -26,12 +33,14 @@ export default function Shirma() {
       width: ["100%", "0%"],
     },
   };
+  if (reduce) return null;
+  const initial = fromTransition ? false : "initial";
   return (
     <AnimatePresence>
       {showShirma && (
         <>
           <motion.div
-            initial="initial"
+            initial={initial}
             animate="animate"
             exit="exit"
             variants={ShirmaAnimate}
@@ -39,7 +48,7 @@ export default function Shirma() {
             className="fixed top-0 bottom-0 right-full h-screen z-30 bg-[var(--third-color)]"
           ></motion.div>
           <motion.div
-            initial="initial"
+            initial={initial}
             animate="animate"
             exit="exit"
             variants={ShirmaAnimate}
@@ -47,7 +56,7 @@ export default function Shirma() {
             className="fixed top-0 bottom-0 right-full h-screen z-20 bg-[var(--text-color)]"
           ></motion.div>
           <motion.div
-            initial="initial"
+            initial={initial}
             animate="animate"
             exit="exit"
             variants={ShirmaAnimate}

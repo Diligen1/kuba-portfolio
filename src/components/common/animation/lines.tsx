@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import Link from "next/link";
+import { TransitionLink as Link } from "../transition/transition";
 
 export default function Lines() {
   const [isAnimating1, setIsAnimating1] = useState(false);

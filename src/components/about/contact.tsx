@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Nunito_Sans } from "next/font/google";
+import { motion } from "framer-motion";
 const nuni = Nunito_Sans({
   weight: ["300", "400", "500"],
   display: "swap",
@@ -43,14 +44,21 @@ export default function Contact() {
   ]);
   return (
     <main className="mx-auto">
-      <div className="w-[100%] px-[20px] md:w-[80%] h-[55vh] flex flex-wrap justify-centeritems-center gap-[20px] md:text-left text-center">
+      <div className="w-[100%] px-[20px] md:w-[80%] h-[55vh] flex flex-wrap justify-center items-center gap-[20px] md:text-left text-center">
         {Contact.map((block, index) => (
-          <a
+          <motion.a
             href={block.assets}
+            target="_blank"
+            rel="noopener noreferrer"
             key={index}
-            className={`hover:scale-105 duration-300 w-full h-[60px] bg-[var(--text-color)] rounded-[8px] gap-[10px] flex flex-row justify-center items-center`}
+            initial={{ opacity: 0, x: -40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: index * 0.07, type: "spring", stiffness: 200, damping: 20 }}
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.97 }}
+            className={`contact-link w-full h-[60px] bg-[var(--text-color)] rounded-[8px] gap-[10px] flex flex-row justify-center items-center`}
           >
-            <div className="text-[22px] h-[26px] text-[var(--background-color)]">
+            <div className="contact-icon text-[22px] h-[26px] text-[var(--background-color)]">
               {block.icon}
             </div>
             <p
@@ -58,7 +66,8 @@ export default function Contact() {
             >
               {block.text}
             </p>
-          </a>
+            <i className="contact-arrow fi fi-rr-arrow-small-right text-[18px] h-[20px] text-[var(--background-color)]"></i>
+          </motion.a>
         ))}
       </div>
     </main>
