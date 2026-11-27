@@ -1,19 +1,9 @@
 "use client";
-import { useRef, useState } from "react";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import image from "../../../public/assets/img/booster.jpg";
 import image_2 from "../../../public/assets/img/travelr.jpg";
-import {
-  AnimatePresence,
-  motion,
-  useMotionTemplate,
-  useMotionValue,
-  useReducedMotion,
-  useSpring,
-  useTransform,
-} from "framer-motion";
-import { Magnetic } from "@/components/common/fx/fx";
 import { Josefin_Sans, PT_Sans_Narrow } from "next/font/google";
+import { Reveal } from "@/components/common/fx/fx";
 const josefin = Josefin_Sans({
   weight: ["300", "400", "500"],
   display: "swap",
@@ -22,236 +12,229 @@ const josefin = Josefin_Sans({
 const narrow = PT_Sans_Narrow({
   weight: ["400"],
   display: "swap",
-  subsets: ["cyrillic"],
+  subsets: ["latin", "cyrillic"],
 });
 
-export default function PromoWorks() {
-  const [openBlockId, setOpenBlockId] = useState<number | null>(null);
+type Project = {
+  id: string;
+  title: string;
+  text: string;
+  stack: string[];
+  url?: string;
+  urlLabel?: string;
+  image?: StaticImageData;
+  icon?: keyof typeof ICONS;
+};
 
-  const handleBlockClick = (id: number) => {
-    setOpenBlockId(openBlockId === id ? null : id);
-  };
-  const [blockDate] = useState([
-    {
-      id: 1,
-      image: image,
-      icon_2: <i className="fi fi-ss-star"></i>,
-      icon: <i className="fi fi-rs-caret-down"></i>,
-      title: "BOOSTER",
-      text: "Разрабатывал сайт для онлайн курсов по программированию совместно с командой разработка длилась больше месяца",
-      number: "01",
-      btn: "ПЕРЕЙТИ",
-      url: "https://booster-school.vercel.app/",
-    },
-    {
-      id: 2,
-      image: image_2,
-      icon: <i className="fi fi-rs-caret-down"></i>,
-      icon_2: <i className="fi fi-ss-star"></i>,
-      title: "HORSE",
-      text: "Разработал сайт для туризма всю front составляюшую часть делал один без дизайнера",
-      number: "02",
-      btn: "ПЕРЕЙТИ",
-      url: "https://horse-travel.com/",
-    },
-    {
-      id: 3,
-      image: "",
-      icon: <i className="fi fi-rs-caret-down"></i>,
-      icon_2: <i className="fi fi-ss-star"></i>,
-      title: "In works",
-      text: "lorem",
-      number: "03",
-      btn: "ПЕРЕЙТИ",
-      url: "",
-    },
-  ]);
+const SITES: Project[] = [
+  {
+    id: "booster",
+    title: "BOOSTER",
+    text: "Сайт онлайн-курсов по программированию, сделан в команде.",
+    stack: ["React", "Next.js"],
+    url: "https://booster-school.vercel.app/",
+    image: image,
+  },
+  {
+    id: "horse",
+    title: "HORSE",
+    text: "Сайт для туризма — весь front-end один, без дизайнера.",
+    stack: ["React", "Tailwind"],
+    url: "https://horse-travel.com/",
+    image: image_2,
+  },
+];
+
+const OWN: Project[] = [
+  {
+    id: "nexus",
+    title: "Nexus",
+    text: "Десктоп-компаньон для Claude и ChatGPT.",
+    stack: ["Desktop", "ИИ"],
+    url: "https://diligen1.github.io/nexus/",
+    urlLabel: "сайт",
+    icon: "nexus",
+  },
+  {
+    id: "kaskad",
+    title: "Каскад чисел",
+    text: "Головоломка в духе 2048: поля до 20×28, ходы в 8 направлениях.",
+    stack: ["Godot", "Android"],
+    icon: "kaskad",
+  },
+  {
+    id: "lantern",
+    title: "Хранитель фонаря",
+    text: "Survivors + idle игра для Android и ПК.",
+    stack: ["Godot", "Blender"],
+    icon: "lantern",
+  },
+  {
+    id: "aether",
+    title: "Aether",
+    text: "Roguelike-survivors: дерево навыков, боссы, бесконечный режим.",
+    stack: ["Rust", "macroquad"],
+    icon: "aether",
+  },
+  {
+    id: "aibot",
+    title: "Ai_Bot",
+    text: "Торговый бот для Binance: paper и live режимы.",
+    stack: ["Python"],
+    url: "https://github.com/Diligen1/Ai_Bot",
+    urlLabel: "github",
+    icon: "bot",
+  },
+  {
+    id: "kuznya",
+    title: "Кузня 1С",
+    text: "Инструмент разработчика 1С. Приватный проект.",
+    stack: ["Python", "1С"],
+    icon: "kuznya",
+  },
+];
+
+// Минималистичные иконки: тонкие линии в цвете темы
+const ICONS = {
+  nexus: (
+    <>
+      <rect x="10" y="12" width="30" height="20" rx="5" />
+      <path d="M18 32 l-4 7 l10 -7" />
+      <rect x="26" y="24" width="28" height="18" rx="5" className="fill" />
+    </>
+  ),
+  kaskad: (
+    <>
+      <rect x="12" y="12" width="18" height="18" rx="3" />
+      <rect x="34" y="12" width="18" height="18" rx="3" className="fill" />
+      <rect x="12" y="34" width="18" height="18" rx="3" />
+      <rect x="34" y="34" width="18" height="18" rx="3" />
+    </>
+  ),
+  lantern: (
+    <>
+      <path d="M26 10 h12 M32 6 v4" />
+      <path d="M22 16 h20 l-2 30 h-16 z" />
+      <path d="M20 50 h24" />
+      <ellipse cx="32" cy="32" rx="4" ry="6" className="fill" />
+    </>
+  ),
+  aether: (
+    <>
+      <path d="M32 6 l12 16 l-12 36 l-12 -36 z" />
+      <path d="M20 22 h24 M32 6 v52" className="thin" />
+      <path d="M32 6 l12 16 h-24 z" className="fill" />
+    </>
+  ),
+  bot: (
+    <>
+      <path d="M10 52 h44 M10 52 V10" />
+      <path d="M16 42 l10 -10 l8 6 l14 -18" />
+      <circle cx="48" cy="20" r="3.5" className="fill" />
+    </>
+  ),
+  kuznya: (
+    <>
+      <path d="M22 18 l-10 14 l10 14" />
+      <path d="M42 18 l10 14 l-10 14" />
+      <path d="M36 14 l-8 36" className="thin" />
+      <circle cx="32" cy="32" r="4" className="fill" />
+    </>
+  ),
+};
+
+function ProjectIcon({ name }: { name: keyof typeof ICONS }) {
   return (
-    <main className="mx-auto w-full min-h-screen  ">
-      <div className="w-auto h-auto z-5 md:h-[100vh] flex flex-col gap-[40px] md:flex-row justify-evenly items-center pt-[90px] pb-[130px] md:pb-0  md:pt-[80px]">
-        {blockDate.map((el, index) => (
-          <motion.div
-            initial={{ y: 500, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{
-              duration: 0.3,
-              delay: 1.6 + index * 0.2,
-              type: "spring",
-            }}
-            key={el.id}
-            style={{ perspective: 900 }}
-          >
-            <TiltCard
-              open={openBlockId === el.id}
-              onToggle={() => handleBlockClick(el.id)}
-            >
-              <div className="flex flex-col justify-around items-center">
-                <div
-                  className={`text-[20px] text-[var(--on-second)] transform transition-transform duration-300 ${
-                    openBlockId === el.id ? "rotate-180" : ""
-                  }`}
-                >
-                  {el.icon}
-                </div>
-                {openBlockId !== el.id && (
-                  <motion.div
-                    initial={{ scale: 0.6, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    className="work-star text-[132px] text-[var(--on-second)]"
-                  >
-                    {el.icon_2}
-                  </motion.div>
-                )}
-                <AnimatePresence initial={false}>
-                  {openBlockId === el.id && (
-                    <motion.div
-                      key="open"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.35, delay: 0.1 }}
-                      className="flex flex-col items-center"
-                    >
-                      <div className="work-img w-[250px] h-[230px] overflow-hidden">
-                        {el.image ? (
-                          <Image
-                            src={el.image}
-                            alt={el.title}
-                            width={300}
-                            height={200}
-                          />
-                        ) : (
-                          <div className="work-soon w-full h-full flex items-center justify-center">
-                            <span className="text-[var(--on-second)] tracking-[6px] text-[14px]">
-                              SOON
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                      <p
-                        className={`${narrow.className} px-[5px] text-[16px] text-center text-[var(--on-second)] pt-[20px]`}
-                      >
-                        {el.text}
-                      </p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-                <p
-                  className={`${josefin.className} text-center  text-[22px] text-[var(--background-color)]`}
-                >
-                  {el.title}
-                </p>
-                <p
-                  className={`${josefin.className} text-center text-[var(--background-color)] text-[14px]`}
-                >
-                  {el.number}
-                </p>
-                {openBlockId === el.id && (
-                  <Magnetic strength={0.3}>
-                    <motion.a
-                      href={el.url || undefined}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-disabled={!el.url}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.2 }}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        if (!el.url) e.preventDefault();
-                      }}
-                      className={`group/btn w-[150px] h-[40px] mt-[6px] justify-center cursor-pointer flex  items-center relative overflow-hidden bg-transparent border-[2px] border-[var(--on-second)] ${
-                        el.url ? "" : "opacity-50"
-                      }`}
-                    >
-                      <div className="left-[2px] top-[2px] bottom-[2px] absolute duration-500 bg-[var(--background-color)] w-[5px] group-hover/btn:w-[calc(100%-4px)]"></div>
-                      <div className="relative z-[5] flex flex-row justify-center items-center">
-                        <p
-                          className={`${narrow.className} text-[16px] tracking-[2px]  z-[5] text-[var(--on-second)] group-hover/btn:text-[var(--second-color)] duration-300`}
-                        >
-                          {el.btn}
-                        </p>
-                        <i className="fi fi-rs-caret-right text-[18px] h-[22px] z-[5] text-[var(--on-second)] group-hover/btn:text-[var(--second-color)] group-hover/btn:translate-x-[4px] duration-300"></i>
-                      </div>
-                    </motion.a>
-                  </Magnetic>
-                )}
-              </div>
-              <div
-                className={`absolute bottom-[5px] left-[50%] translate-x-[-50%] right-0 h-1 bg-[var(--background-color)] transition-all duration-300 ${
-                  openBlockId === el.id ? "w-[60%]" : "w-1/4"
-                }`}
-              ></div>
-            </TiltCard>
-          </motion.div>
-        ))}
-      </div>
-    </main>
+    <svg
+      viewBox="0 0 64 64"
+      className="project-icon w-[56px] h-[56px]"
+      fill="none"
+      stroke="var(--on-second)"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <style>{`.fill{fill:var(--background-color);stroke:var(--on-second)}.thin{stroke-width:1;opacity:.6}`}</style>
+      {ICONS[name]}
+    </svg>
   );
 }
 
-// Карточка с 3D-наклоном за мышью и бликом
-function TiltCard({
-  open,
-  onToggle,
-  children,
-}: {
-  open: boolean;
-  onToggle: () => void;
-  children: React.ReactNode;
-}) {
-  const reduce = useReducedMotion();
-  const ref = useRef<HTMLDivElement>(null);
-  const px = useMotionValue(0.5);
-  const py = useMotionValue(0.5);
-  const sx = useSpring(px, { stiffness: 200, damping: 20 });
-  const sy = useSpring(py, { stiffness: 200, damping: 20 });
-  const rotateY = useTransform(sx, [0, 1], [-12, 12]);
-  const rotateX = useTransform(sy, [0, 1], [10, -10]);
-  const gx = useTransform(sx, (v) => `${v * 100}%`);
-  const gy = useTransform(sy, (v) => `${v * 100}%`);
-  const glare = useMotionTemplate`radial-gradient(circle at ${gx} ${gy}, color-mix(in srgb, var(--on-second) 8%, transparent), transparent 60%)`;
-  const [hover, setHover] = useState(false);
-
-  const onMove = (e: React.PointerEvent) => {
-    if (reduce || e.pointerType !== "mouse" || !ref.current) return;
-    const r = ref.current.getBoundingClientRect();
-    px.set((e.clientX - r.left) / r.width);
-    py.set((e.clientY - r.top) / r.height);
-  };
-  const reset = () => {
-    px.set(0.5);
-    py.set(0.5);
-    setHover(false);
-  };
-
+function Card({ p, index, baseDelay = 0 }: { p: Project; index: number; baseDelay?: number }) {
+  const Wrapper: any = p.url ? "a" : "div";
   return (
-    <motion.div
-      ref={ref}
-      role="button"
-      tabIndex={0}
-      aria-expanded={open}
-      onClick={onToggle}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          onToggle();
-        }
-      }}
-      onPointerMove={onMove}
-      onPointerEnter={(e) => e.pointerType === "mouse" && setHover(true)}
-      onPointerLeave={reset}
-      style={reduce ? undefined : { rotateX, rotateY, transformStyle: "preserve-3d" }}
-      className={`work-card relative z-[5] w-[300px] bg-[var(--second-color)] duration-300 transition-[height,box-shadow] border-x-[2px] border-[var(--text-color)] overflow-hidden cursor-pointer ${
-        open ? "h-[500px]" : "h-[350px]"
-      }`}
-    >
-      {children}
-      <motion.div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 transition-opacity duration-300"
-        style={{ background: glare, opacity: hover ? 1 : 0 }}
-      />
-    </motion.div>
+    <Reveal delay={baseDelay + index * 0.06} className="h-full">
+      <Wrapper
+        {...(p.url ? { href: p.url, target: "_blank", rel: "noopener noreferrer" } : {})}
+        className="project-card group h-full flex flex-col bg-[var(--second-color)] border-x-[2px] border-[var(--text-color)] overflow-hidden"
+      >
+        {p.image ? (
+          <div className="h-[170px] overflow-hidden">
+            <Image src={p.image} alt={p.title} className="w-full h-full object-cover" placeholder="empty" />
+          </div>
+        ) : (
+          <div className="h-[110px] px-[24px] flex items-end">
+            {p.icon && <ProjectIcon name={p.icon} />}
+          </div>
+        )}
+        <div className="flex flex-col gap-[10px] p-[24px] flex-1">
+          <div className="flex items-baseline justify-between gap-[12px]">
+            <h3 className={`${josefin.className} text-[22px] tracking-[2px] text-[var(--on-second)]`}>
+              {p.title}
+            </h3>
+            {p.url && (
+              <span className={`${josefin.className} text-[12px] tracking-[2px] uppercase text-[var(--on-second)] opacity-70 flex items-center gap-[4px] whitespace-nowrap`}>
+                {p.urlLabel || "открыть"}
+                <i className="fi fi-rr-arrow-small-right h-[16px] text-[16px] transition-transform duration-300 group-hover:translate-x-[4px]"></i>
+              </span>
+            )}
+          </div>
+          <p className={`${narrow.className} text-[16px] leading-[1.5] text-[var(--on-second)] opacity-85`}>
+            {p.text}
+          </p>
+          <div className="flex flex-wrap gap-[6px] mt-auto pt-[8px]">
+            {p.stack.map((s) => (
+              <span
+                key={s}
+                className="text-[12px] tracking-[1px] px-[10px] py-[3px] rounded-full border border-[color-mix(in_srgb,var(--on-second)_35%,transparent)] text-[var(--on-second)]"
+              >
+                {s}
+              </span>
+            ))}
+          </div>
+        </div>
+        <div className="h-[3px] w-1/4 mx-auto mb-[8px] bg-[var(--background-color)] transition-all duration-500 group-hover:w-[60%]"></div>
+      </Wrapper>
+    </Reveal>
+  );
+}
+
+export default function PromoWorks() {
+  return (
+    <main className="mx-auto w-full min-h-screen">
+      <div className="w-full max-w-[1100px] mx-auto px-[24px] pt-[110px] md:pt-[150px] pb-[160px] md:pb-[120px] flex flex-col gap-[90px]">
+        <section>
+          <Reveal delay={1.5}>
+            <p className={`${josefin.className} section-title mb-[28px]`}>Сайты</p>
+          </Reveal>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-[28px]">
+            {SITES.map((p, i) => (
+              <Card key={p.id} p={p} index={i} baseDelay={1.55} />
+            ))}
+          </div>
+        </section>
+        <section>
+          <Reveal>
+            <p className={`${josefin.className} section-title mb-[28px]`}>Свои проекты</p>
+          </Reveal>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[28px]">
+            {OWN.map((p, i) => (
+              <Card key={p.id} p={p} index={i} />
+            ))}
+          </div>
+        </section>
+      </div>
+    </main>
   );
 }

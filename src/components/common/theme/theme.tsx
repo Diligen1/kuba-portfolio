@@ -108,22 +108,19 @@ function ThemeToast({
         <motion.div
           role="status"
           aria-live="polite"
-          initial={{ opacity: 0, y: -20, x: "-50%", scale: 0.95 }}
-          animate={{ opacity: 1, y: 0, x: "-50%", scale: 1 }}
-          exit={{ opacity: 0, y: -20, x: "-50%", scale: 0.95 }}
-          transition={{ type: "spring", stiffness: 380, damping: 28 }}
+          initial={{ opacity: 0, y: -8, x: "-50%" }}
+          animate={{ opacity: 1, y: 0, x: "-50%" }}
+          exit={{ opacity: 0, y: -8, x: "-50%" }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
           onMouseEnter={onHover}
           onMouseLeave={onLeave}
-          className="theme-toast fixed left-1/2 top-[110px] md:top-[112px] z-[60] flex flex-col items-center gap-[8px] rounded-[12px] px-[16px] py-[10px]"
+          className="theme-toast fixed left-1/2 top-[110px] md:top-[112px] z-[60] flex flex-col items-center gap-[8px] rounded-[10px] px-[14px] py-[8px]"
         >
-          <span className="text-[12px] tracking-[4px] uppercase opacity-80">
-            тема {index + 1}/{THEMES.length}
-          </span>
           <motion.span
             key={THEMES[index].id}
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-[18px] tracking-[6px] uppercase font-medium"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-[12px] tracking-[5px] uppercase"
           >
             {THEMES[index].name}
           </motion.span>

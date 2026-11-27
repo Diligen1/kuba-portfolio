@@ -1,5 +1,4 @@
 "use client";
-import { useRef } from "react";
 import { motion } from "framer-motion";
 import { Major_Mono_Display, Bebas_Neue } from "next/font/google";
 import { useTheme } from "./theme";
@@ -7,19 +6,10 @@ import { THEMES } from "./themes";
 const bebas = Bebas_Neue({ weight: ["400"], display: "swap", subsets: ["latin"] });
 const major = Major_Mono_Display({ weight: ["400"], display: "swap", subsets: ["latin"] });
 
-// Лого "CK": клик — следующая тема; 7 быстрых кликов — пасхалка.
+// Лого "CK": клик — следующая тема.
 export default function ThemeLogo({ size = "lg" }: { size?: "lg" | "sm" }) {
   const { index, nextTheme } = useTheme();
-  const clicks = useRef<number[]>([]);
-  const onClick = () => {
-    nextTheme();
-    const now = Date.now();
-    clicks.current = [...clicks.current.filter((t) => now - t < 2500), now];
-    if (clicks.current.length >= 7) {
-      clicks.current = [];
-      window.dispatchEvent(new Event("ck-egg"));
-    }
-  };
+  const onClick = () => nextTheme();
   const t = THEMES[index];
   const big = size === "lg";
   return (
@@ -27,7 +17,7 @@ export default function ThemeLogo({ size = "lg" }: { size?: "lg" | "sm" }) {
       <motion.button
         type="button"
         onClick={onClick}
-        whileTap={{ scale: 0.88, rotate: -8 }}
+        whileTap={{ scale: 0.94 }}
         aria-label={`Сменить тему (сейчас ${t.name})`}
         title="Сменить тему · клавиша T"
         className={`${bebas.className} cursor-pointer ${

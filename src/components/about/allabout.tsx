@@ -3,6 +3,7 @@ import { Info, Skills, Contact } from "@/components";
 import { useEffect, useState } from "react";
 import style from "@/styles/headermobile/headermobile.module.css";
 import { AnimatePresence, motion } from "framer-motion";
+import AboutSections from "./sections";
 
 const TABS = ["Info", "Skills", "Contact"];
 
@@ -19,6 +20,7 @@ export default function AllAbout() {
   };
   return (
     <main className="mx-auto relative">
+      <div className="relative overflow-hidden">
       <motion.div
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}
@@ -57,9 +59,9 @@ export default function AllAbout() {
           <AnimatePresence mode="wait">
             <motion.div
               key={activeComponent}
-              initial={{ opacity: 0, x: 60 }}
+              initial={{ opacity: 0, x: 24 }}
               animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -60 }}
+              exit={{ opacity: 0, x: -24 }}
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
               drag={touch ? "x" : false}
               dragConstraints={{ left: 0, right: 0 }}
@@ -84,15 +86,17 @@ export default function AllAbout() {
         initial={{ opacity: 0, scale: 0 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.6, delay: 2.6, type: "spring" }}
-        className={`hidden md:flex absolute z-[-2] left-[-250px] bottom-[-550px] w-[700px] h-[700px] rounded-[50%] bg-[var(--third-color)] border-[2px] border-[var(--text-color)]`}
+        className={`hidden md:flex absolute z-[-2] left-[-250px] bottom-[-550px] w-[700px] h-[700px] rounded-[50%] bg-[var(--third-color)] border-[1px] border-[var(--text-color)]`}
       ></motion.div>
 
       <motion.div
         initial={{ opacity: 0, scale: 0 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.6, delay: 2.6, type: "spring" }}
-        className={`hidden md:flex absolute z-[-1] left-[50px] bottom-[120px] w-[150px] h-[150px] rounded-[50%] bg-[var(--third-color)] border-[2px] border-[var(--text-color)]`}
+        className={`hidden md:flex absolute z-[-1] left-[50px] bottom-[120px] w-[150px] h-[150px] rounded-[50%] bg-[var(--third-color)] border-[1px] border-[var(--text-color)]`}
       ></motion.div>
+      </div>
+      <AboutSections />
     </main>
   );
 }

@@ -2,7 +2,6 @@
 import { useState } from "react";
 import style from "@/styles/headermobile/headermobile.module.css";
 import { AnimatePresence, motion } from "framer-motion";
-import { Magnetic } from "@/components/common/fx/fx";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const MAX = 500;
@@ -118,7 +117,7 @@ export default function PromoContact() {
           </AnimatePresence>
         </motion.div>
 
-        <Magnetic strength={0.3} className="mt-[14px]">
+        <div className="mt-[14px]">
           <button
             type="submit"
             disabled={status !== "idle"}
@@ -191,21 +190,8 @@ export default function PromoContact() {
               )}
             </AnimatePresence>
           </button>
-        </Magnetic>
+        </div>
 
-        {/* Самолётик улетает после «отправки» */}
-        <AnimatePresence>
-          {status === "sent" && (
-            <motion.i
-              key="plane"
-              aria-hidden
-              className="fi fi-rr-paper-plane pointer-events-none absolute left-1/2 top-[68%] text-[34px] h-[36px] text-[var(--text-color)]"
-              initial={{ x: -20, y: 0, opacity: 1, rotate: 0, scale: 0.6 }}
-              animate={{ x: 420, y: -380, opacity: 0, rotate: 20, scale: 1.4 }}
-              transition={{ duration: 1.4, ease: [0.5, 0, 0.75, 0] }}
-            />
-          )}
-        </AnimatePresence>
       </motion.form>
     </main>
   );

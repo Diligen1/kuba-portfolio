@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { Major_Mono_Display } from "next/font/google";
 import HeaderMobile from "../headermobile/headermobile";
 import { TransitionLink } from "../transition/transition";
-import { Magnetic } from "../fx/fx";
 import ThemeLogo from "../theme/logo";
 const major = Major_Mono_Display({
   weight: ["400"],
@@ -24,8 +23,7 @@ function NavLink({ href, label, delay }: { href: string; label: string; delay: n
     href === "/" ? pathname === "/" : pathname.replace(/\/+$/, "") === href;
   return (
     <motion.div {...drop(delay)}>
-      <Magnetic strength={0.4}>
-        <TransitionLink
+      <TransitionLink
           href={href}
           aria-current={active ? "page" : undefined}
           className={`${major.className} nav-link ${
@@ -34,7 +32,6 @@ function NavLink({ href, label, delay }: { href: string; label: string; delay: n
         >
           {label}
         </TransitionLink>
-      </Magnetic>
     </motion.div>
   );
 }
@@ -58,9 +55,7 @@ export default function Header() {
           <NavLink href="/work" label="work" delay={1.9} />
           <Dot delay={2.1} />
           <motion.div {...drop(2.2)}>
-            <Magnetic strength={0.25}>
-              <ThemeLogo />
-            </Magnetic>
+            <ThemeLogo />
           </motion.div>
           <Dot delay={2.1} />
           <NavLink href="/" label="home" delay={1.9} />

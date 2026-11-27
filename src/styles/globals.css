@@ -3,12 +3,12 @@
 @tailwind utilities;
 
 /* Палитры тем задаются в components/common/theme/themes.ts (инжектятся в <head>). */
-@property --background-color { syntax: "<color>"; inherits: true; initial-value: #00a19a; }
-@property --text-color { syntax: "<color>"; inherits: true; initial-value: #ffffff; }
-@property --second-color { syntax: "<color>"; inherits: true; initial-value: #2e282a; }
-@property --third-color { syntax: "<color>"; inherits: true; initial-value: #001524; }
-@property --on-second { syntax: "<color>"; inherits: true; initial-value: #ffffff; }
-@property --on-third { syntax: "<color>"; inherits: true; initial-value: #ffffff; }
+@property --background-color { syntax: "<color>"; inherits: true; initial-value: #3a7671; }
+@property --text-color { syntax: "<color>"; inherits: true; initial-value: #f7f5ef; }
+@property --second-color { syntax: "<color>"; inherits: true; initial-value: #d7e6e1; }
+@property --third-color { syntax: "<color>"; inherits: true; initial-value: #2a5a56; }
+@property --on-second { syntax: "<color>"; inherits: true; initial-value: #1f3b3a; }
+@property --on-third { syntax: "<color>"; inherits: true; initial-value: #f7f5ef; }
 
 /* Плавная смена темы: анимируются сами переменные */
 html.theme-anim {
@@ -49,120 +49,23 @@ body::-webkit-scrollbar-thumb {
   color: var(--background-color);
 }
 
-/* ---------- Фон ---------- */
-.bg-fx {
-  position: fixed;
-  inset: 0;
-  z-index: -20;
-  pointer-events: none;
-  overflow: hidden;
-}
-.bg-blob {
-  position: absolute;
-  width: 70vmax;
-  height: 70vmax;
-  border-radius: 50%;
-  opacity: 0.14;
-  will-change: transform;
-}
-.bg-blob-1 {
-  top: -30vmax;
-  left: -20vmax;
-  background: radial-gradient(circle, var(--third-color) 0%, transparent 65%);
-  animation: blob1 22s ease-in-out infinite alternate;
-}
-.bg-blob-2 {
-  bottom: -35vmax;
-  right: -25vmax;
-  background: radial-gradient(circle, var(--second-color) 0%, transparent 65%);
-  opacity: 0.1;
-  animation: blob2 28s ease-in-out infinite alternate;
-}
-@keyframes blob1 {
-  to { transform: translate3d(18vw, 14vh, 0) scale(1.15); }
-}
-@keyframes blob2 {
-  to { transform: translate3d(-16vw, -12vh, 0) scale(0.9); }
-}
-.bg-noise {
-  position: absolute;
-  inset: 0;
-  opacity: 0.05;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
-/* ---------- Курсор ---------- */
-html.has-cursor,
-html.has-cursor * {
-  cursor: none !important;
-}
-html.has-cursor input,
-html.has-cursor textarea {
-  cursor: text !important;
-}
-.cursor-ring,
-.cursor-dot {
-  position: fixed;
-  left: 0;
-  top: 0;
-  pointer-events: none;
-  will-change: transform;
-}
-.cursor-ring {
-  z-index: 100;
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  border: 2px solid var(--text-color);
-  opacity: 0;
-  transition: opacity 0.3s, background-color 0.3s, border-color 0.3s;
-}
-.cursor-ring.is-hover {
-  background-color: color-mix(in srgb, var(--text-color) 18%, transparent);
-  border-color: var(--third-color);
-}
-.cursor-dot {
-  z-index: 101;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--text-color);
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-.cursor-ring.is-visible { opacity: 0.9; }
-.cursor-dot.is-visible { opacity: 1; }
-
 /* ---------- Тост темы ---------- */
 .theme-toast {
-  background: color-mix(in srgb, var(--third-color) 88%, transparent);
+  background: var(--third-color);
   color: var(--on-third);
-  border: 2px solid var(--text-color);
-  backdrop-filter: blur(6px);
+  border: 1px solid color-mix(in srgb, var(--text-color) 35%, transparent);
 }
 .theme-dot {
-  width: 16px;
-  height: 16px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
-  border: 2px solid var(--on-third);
-  opacity: 0.6;
+  border: 1px solid var(--on-third);
+  opacity: 0.55;
   transition: transform 0.25s, opacity 0.25s;
 }
-.theme-dot:hover { transform: scale(1.25); opacity: 1; }
-.theme-dot[data-active="true"] {
-  opacity: 1;
-  transform: scale(1.3);
-  box-shadow: 0 0 0 2px var(--third-color), 0 0 0 4px var(--on-third);
-}
+.theme-dot:hover { opacity: 1; }
+.theme-dot[data-active="true"] { opacity: 1; transform: scale(1.3); }
 
-.egg-text {
-  color: var(--text-color);
-  font-weight: 700;
-}
-
-/* ---------- Свечение / общие hover ---------- */
-/* hover без свечения: только лёгкий сдвиг/масштаб (framer) */
 .nav-link.is-active::after {
   width: 120%;
   background-color: var(--second-color);
@@ -172,72 +75,54 @@ html.has-cursor textarea {
   outline-offset: 4px;
 }
 
+/* ---------- Общие ---------- */
+.section-title {
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  font-size: 12px;
+  color: var(--text-color);
+  opacity: 0.7;
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--text-color);
+  border: 1px solid color-mix(in srgb, var(--text-color) 35%, transparent);
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+.chip:hover {
+  background-color: var(--text-color);
+  color: var(--background-color);
+}
+.contact-arrow { opacity: 0; transform: translateX(-6px); transition: opacity 0.3s, transform 0.3s; }
+.contact-link:hover .contact-arrow { opacity: 1; transform: translateX(0); }
+
+/* ---------- Work ---------- */
+.project-card {
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s;
+}
+.project-card:hover { transform: translateY(-4px); }
+.project-card .project-icon { transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
+.project-card:hover .project-icon { transform: scale(1.06); }
+.project-card img { transition: transform 0.6s ease; }
+.project-card:hover img { transform: scale(1.04); }
+
+/* ---------- Contact ---------- */
+.contact-field { transition: border-color 0.3s; }
+.contact-field:focus { border-color: var(--third-color); }
+.contact-field.is-error { border-color: var(--third-color); border-style: dashed; }
+.contact-field:disabled { opacity: 0.7; }
+
 @media (prefers-reduced-motion: reduce) {
   html.theme-anim { transition: none; }
-  .bg-blob { animation: none; }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
   }
 }
-
-/* ---------- Главная ---------- */
-.promo-circle {
-  position: relative;
-}
-.promo-orbit {
-  position: absolute;
-  inset: -2px;
-  border-radius: 50%;
-  animation: orbit 14s linear infinite;
-  pointer-events: none;
-}
-.promo-orbit::before {
-  content: "";
-  position: absolute;
-  top: -7px;
-  left: 50%;
-  width: 12px;
-  height: 12px;
-  margin-left: -6px;
-  border-radius: 50%;
-  background: var(--text-color);
-}
-@keyframes orbit { to { transform: rotate(360deg); } }
-.promo-char:hover { color: var(--second-color); }
-.promo-char { transition: color 0.3s; }
-.dot-bob { animation: bob 2.6s ease-in-out infinite both; }
-@keyframes bob { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-10px); } }
-
-/* ---------- About ---------- */
-.skill-fill { opacity: 0.3; transition: opacity 0.3s; }
-.skill-hex:hover .skill-fill { opacity: 0.6; }
-.contact-icon { transition: transform 0.35s cubic-bezier(.34,1.56,.64,1); }
-.contact-link:hover .contact-icon { transform: rotate(-12deg) scale(1.2); }
-.contact-arrow { opacity: 0; transform: translateX(-8px); transition: opacity 0.3s, transform 0.3s; }
-.contact-link:hover .contact-arrow { opacity: 1; transform: translateX(0); }
-
-/* ---------- Work ---------- */
-.work-card:hover .work-star { animation: spin-star 1.2s cubic-bezier(.34,1.56,.64,1); }
-@keyframes spin-star { from { transform: rotate(0) scale(1); } 50% { transform: rotate(180deg) scale(1.1); } to { transform: rotate(360deg) scale(1); } }
-.work-img img { transition: transform 0.6s ease; }
-.work-card:hover .work-img img { transform: scale(1.06); }
-.work-soon {
-  background: repeating-linear-gradient(45deg, color-mix(in srgb, var(--on-second) 10%, transparent) 0 10px, transparent 10px 20px);
-  border: 2px dashed color-mix(in srgb, var(--on-second) 40%, transparent);
-}
-
-/* ---------- Contact ---------- */
-.contact-field {
-  transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
-}
-.contact-field:focus {
-  border-color: var(--third-color);
-}
-.contact-field.is-error {
-  border-color: var(--third-color);
-  border-style: dashed;
-}
-.contact-field.is-ok { border-color: var(--text-color); }
-.contact-field:disabled { opacity: 0.7; }

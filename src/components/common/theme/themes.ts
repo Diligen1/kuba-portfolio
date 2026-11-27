@@ -11,16 +11,16 @@ export type Theme = {
 
 // Порядок = порядок переключения по клику на лого "CK".
 export const THEMES: Theme[] = [
-  { id: "base", name: "Lagoon", bg: "#00a19a", text: "#ffffff", second: "#2e282a", third: "#001524", onSecond: "#ffffff", onThird: "#ffffff" },
-  { id: "red", name: "Crimson", bg: "#e3173a", text: "#fdfffc", second: "#011627", third: "#0f6e75", onSecond: "#fdfffc", onThird: "#fdfffc" },
-  { id: "white", name: "Cobalt", bg: "#3772ff", text: "#080708", second: "#fdca40", third: "#ffc857", onSecond: "#080708", onThird: "#080708" },
-  { id: "pink", name: "Noir", bg: "#1d1d1d", text: "#fdfffc", second: "#a3cef1", third: "#b45309", onSecond: "#1d1d1d", onThird: "#fdfffc" },
-  { id: "matcha", name: "Matcha", bg: "#2d5a3d", text: "#f1f7ed", second: "#e9f5db", third: "#1b3a26", onSecond: "#0f2418", onThird: "#c9e265" },
-  { id: "sunset", name: "Sunset", bg: "#ff6b35", text: "#1b0e2e", second: "#fff1d6", third: "#ffd23f", onSecond: "#1b0e2e", onThird: "#1b0e2e" },
-  { id: "violet", name: "Ultraviolet", bg: "#7b5cff", text: "#ffffff", second: "#14102a", third: "#c2185b", onSecond: "#ffffff", onThird: "#ffffff" },
-  { id: "paper", name: "Paper", bg: "#f4efe6", text: "#1a1a1a", second: "#d62839", third: "#f2c14e", onSecond: "#ffffff", onThird: "#1a1a1a" },
-  { id: "arctic", name: "Arctic", bg: "#0e2a47", text: "#e8f1ff", second: "#9ad1ff", third: "#c2410c", onSecond: "#0e2a47", onThird: "#ffffff" },
-  { id: "acid", name: "Acid", bg: "#121212", text: "#f2f2f2", second: "#c6ff3d", third: "#262626", onSecond: "#121212", onThird: "#c6ff3d" },
+  { id: "base", name: "Lagoon", bg: "#3a7671", text: "#f7f5ef", second: "#d7e6e1", third: "#2a5a56", onSecond: "#1f3b3a", onThird: "#f7f5ef" },
+  { id: "sage", name: "Sage", bg: "#c9d3c0", text: "#2b3328", second: "#4f5e4a", third: "#b3c1a8", onSecond: "#f1f4ec", onThird: "#2b3328" },
+  { id: "rose", name: "Dusty Rose", bg: "#dcbfba", text: "#3b2a2c", second: "#6e4b50", third: "#cba6a1", onSecond: "#f6ece9", onThird: "#3b2a2c" },
+  { id: "sand", name: "Sand", bg: "#e6d9c3", text: "#3d3427", second: "#75624a", third: "#d5c4a6", onSecond: "#f8f2e8", onThird: "#3d3427" },
+  { id: "fog", name: "Fog", bg: "#d6dce1", text: "#2c3640", second: "#56636f", third: "#bfc8d0", onSecond: "#f2f5f7", onThird: "#2c3640" },
+  { id: "lavender", name: "Lavender", bg: "#d3cbe2", text: "#342e45", second: "#5f577a", third: "#bcb1d3", onSecond: "#f3f0f8", onThird: "#342e45" },
+  { id: "mint", name: "Mint", bg: "#d0e6db", text: "#24413a", second: "#4a7366", third: "#b4d5c6", onSecond: "#f1f8f4", onThird: "#24413a" },
+  { id: "twilight", name: "Twilight", bg: "#2f3a52", text: "#e4e7ef", second: "#c4cbe0", third: "#3f4b67", onSecond: "#2a3349", onThird: "#e4e7ef" },
+  { id: "mocha", name: "Mocha", bg: "#5e4b3f", text: "#f3ebe2", second: "#e6d9c9", third: "#4c3c32", onSecond: "#45362d", onThird: "#f3ebe2" },
+  { id: "graphite", name: "Graphite", bg: "#36383c", text: "#e6e4df", second: "#d3cfc6", third: "#46494f", onSecond: "#33353a", onThird: "#e6e4df" },
 ];
 
 export const STORAGE_KEY = "ck-theme";
